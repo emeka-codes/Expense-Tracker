@@ -29,6 +29,15 @@ def display_home_page(request:Request, db: Session= Depends(get_db)):
 
 @app.get("/add", response_class=HTMLResponse)
 def display_form(request:Request):
-    return templates.TemplateResponse("form.html", {"request":request})
+    return templates.TemplateResponse("form.html", {"request": request})
+
+@app.post("/add_expense", response_class=HTMLResponse)
+def add_expense(request: Request, amount:float = Form(...), category:str = Form(...), description:str = Form(...), db: Session= Depends(get_db)):
+    expense= Expense(amount=amount, category= category, description= description)
+    db.add(expense)
+    db.commit()
+    db.refresh(expense)
+    return RedirectResponse("/", status_code=302)
+
 
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Expenses</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>Today's Expenses</h1>
+    <a href="/add">Add New Expense</a>
+    <table>
+        <tr>
+            <th>Amount</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Date</th>
+        </tr>
+        {% for expense in get_today_expenses %}
+        <tr>
+            <td>₦{{ expense.amount }}</td>
+            <td>{{ expense.category }}</td>
+            <td>{{ expense.description }}</td>
+            <td>{{ expense.date }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <h3>Total Spent Today: ₦{{ get_today_total }}</h3>
+</body>
+</html>
