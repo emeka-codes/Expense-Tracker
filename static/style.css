@@ -1,0 +1,119 @@
+/* static/styles.css */
+body {
+    background-color: #B6C2D9; 
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: black;
+}
+
+
+.modal{
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,0.5);
+    overflow: auto;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.modal-contents{
+    width: 50%;
+    height: 50%;
+    padding: 20px;
+    padding-top: 0;
+    overflow: auto;
+    background-color: #ddd;
+    border-radius: 10px;
+
+    
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.amount{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+}
+.amount input{
+    width: 16rem;
+    height: 2rem;
+    border-radius: 8px;
+}
+
+.category{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.category input{
+    width: 16rem;
+    height: 2rem;
+    border-radius: 8px;
+}
+.description{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.description textarea{
+    width: 16rem;
+    height: 2rem;
+    border: 1.5px solid black;
+    border-radius: 8px;
+}
+.header{
+    background-color: #ddd;
+    top: 0;
+    position: sticky;
+    padding-top: 20px;
+}
+
+.submit-button button{
+    width: 4rem;
+    padding: 8px;
+    border-radius: 8px;
+}
+.add-expense button{
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border: none;
+}
+
+.delete-button{
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: none;
+
+}

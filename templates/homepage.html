@@ -2,27 +2,117 @@
 <html>
 <head>
     <title>Daily Expenses</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
 <body>
-    <h1>Today's Expenses</h1>
-    <a href="/add">Add New Expense</a>
-    <table>
-        <tr>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Date</th>
-        </tr>
-        {% for expense in get_today_expenses %}
-        <tr>
-            <td>₦{{ expense.amount }}</td>
-            <td>{{ expense.category }}</td>
-            <td>{{ expense.description }}</td>
-            <td>{{ expense.date }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+    <h1>Expenses Tracker</h1>
+    <div class="add-expense">
+        <button onclick="OpenAddExpenseModal()">Add Expenses</button>
+    </div>
+    <form action="/delete-selected" method="post">
+        <button type="submit" class="delete-button">Delete selected</button>
+            <table>
+                <tr>
+                    <th><input type="checkbox" id="select-all"/></th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount (₦)</th>
+                </tr>
+                {% for expense in get_today_expenses %}
+                <tr>
+                    <td><input type="checkbox" name="expense_ids" value="{{ expense.id }}"/></td>
+                    <td>{{ expense.category }}</td>
+                    <td>{{ expense.date }}</td>
+                    <td>{{ expense.description }}</td>
+                    <td>₦{{ expense.amount }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+    </form>
     <h3>Total Spent Today: ₦{{ get_today_total }}</h3>
-</body>
-</html>
+
+    <form action="/expenses_by_date" method="get">
+        <label for="date">Search by Date:</label>
+        <input type="date" id="date" name="date" required>
+        <button type="submit">Search</button>
+    </form>
+
+    
+
+    {% if get_expenses %}
+        <h2>Expenses for {{ selected_date if selected_date else "Today" }}</h2>
+        <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount (₦)</th>
+                </tr>
+            {% for item in get_expenses %}
+                <tr>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.date }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>₦{{ item.amount }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p><strong>Total:</strong> ₦{{ get_total }}</p>
+    {% endif %}
+
+
+    <div class="modal" id="expense_modal">
+        <div class="modal-contents">
+            <div class="header">
+                <button><span class="close" onclick="closeAddExpenseModal()">&times;</span></button>
+                <h1>Add New Expense</h1>
+            </div>
+            <form method="post" action="/add_expense">
+                <div class="form-container">
+                    <div class="category">
+                        <label>Category:</label>
+                        <input type="text" name="category" required><br>
+                    </div>
+                    <div class="description">
+                        <label>Description:</label>
+                        <textarea name="description"></textarea><br>
+                    </div>
+                    <div class="amount">
+                        <label>Amount:</label>
+                        <input type="number" step="0.01" name="amount" required><br>
+                    </div>
+                    
+                    <div class="submit-button">
+                        <button type="submit">Add</button>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <a href="/">Back to Home</a>
+        </div>
+    </div>
+
+
+    <script>
+        function OpenAddExpenseModal() {
+            document.getElementById('expense_modal').style.display= 'flex';
+        }
+        
+        function closeAddExpenseModal() {
+            document.getElementById('expense_modal').style.display= 'none';
+        }
+
+        
+    // Toggle all checkboxes when #select-all is changed
+        document.getElementById('select-all').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('input[name="expense_ids"]');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+
+    </script>
+
+
+    </body>
+    </html>
