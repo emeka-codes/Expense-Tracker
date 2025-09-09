@@ -10,5 +10,7 @@ class Expense(Base):
     category = Column(String, nullable=False)
     description = Column(String)
     date = Column(Date, default=datetime.date.today)
+    partner_id= Column(String)
+    product_id= Column(String)
 
 
